@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: it-scaffold-code-generator
+  profiles:
+    active: "@profiles.active@"
+server:
+  port: 20000
+
+# log日志存放地址
+logback:
+  logDir: D:\\it-diary\\log\\codeGenerator
+  maxHistory: 10
+  appName: it-scaffold-code-generator
+  level: INFO
