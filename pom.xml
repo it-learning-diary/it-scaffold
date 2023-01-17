@@ -25,6 +25,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
+        <mysql.connector.version>8.0.13</mysql.connector.version>
     </properties>
     
     <!-- 管理第三方依赖版本 -->
@@ -37,6 +38,12 @@
                 <version>${mybatis.plus.generator.version}</version>
             </dependency>
 
+            <!-- mysql连接connection -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
