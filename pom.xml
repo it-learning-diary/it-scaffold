@@ -26,8 +26,11 @@
         <maven.compiler.target>8</maven.compiler.target>
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <mysql.connector.version>8.0.13</mysql.connector.version>
+        <mybatis.plus.version>3.5.3</mybatis.plus.version>
+        <freemarker.version>2.3.31</freemarker.version>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
-    
+
     <!-- 管理第三方依赖版本 -->
     <dependencyManagement>
         <dependencies>
@@ -44,6 +47,29 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.connector.version}</version>
             </dependency>
+
+            <!-- mybatis增强 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <!-- 模板引擎 -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+
+
+            <!--get/set方法自动生成插件 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
