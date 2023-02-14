@@ -11,10 +11,7 @@ import ${superControllerClassPackage};
 </#if>
 
 /**
- * <p>
- * ${table.comment!} 请求转发层
- * </p>
- *
+ * @description: ${table.comment!} 请求转发层
  * @author ${author}
  * @version: v1
  * @time ${date}

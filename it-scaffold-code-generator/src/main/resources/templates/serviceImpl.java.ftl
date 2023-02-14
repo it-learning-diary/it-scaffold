@@ -7,10 +7,7 @@ import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
 
 /**
- * <p>
- * ${table.comment!} 业务逻辑类
- * </p>
- *
+ * @description: ${table.comment!} 业务逻辑类
  * @author ${author}
  * @version: v1
  * @time ${date}
