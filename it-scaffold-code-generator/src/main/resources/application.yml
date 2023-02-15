@@ -12,3 +12,7 @@ logback:
   maxHistory: 10
   appName: it-scaffold-code-generator
   level: INFO
+
+# 指定logback日志配置
+logging:
+  config: classpath:logback-spring.xml
