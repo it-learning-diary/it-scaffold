@@ -3,8 +3,13 @@ spring:
     name: it-scaffold-code-generator
   profiles:
     active: "@profiles.active@"
+  datasource:
+    url: jdbc:mysql://ip:3306/demo?useAffectedRows=true&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: admin
+    password: 123
 server:
   port: 20000
+
 
 # log日志存放地址
 logback:

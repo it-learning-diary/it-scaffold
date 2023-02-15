@@ -4,10 +4,7 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
- * <p>
- * ${table.comment!} 业务层
- * </p>
- *
+ * @description: ${table.comment!} 业务层
  * @author ${author}
  * @version: v1
  * @time ${date}

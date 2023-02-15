@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import lombok.Setter;
 
@@ -41,12 +42,62 @@ public class DefaultGeneratorStrategy {
      */
     private static AbstractTemplateEngine templateEngine;
 
+
     /**
-     * 类加载时默认初始化
+     * 获取默认的数据源配置 -> 在此处可以设置通用的全局配置
+     *
+     * @return
      */
-    static {
+    public static DataSourceConfig.Builder getDefaultDatasourceConfig(String url, String username, String password) {
+        DataSourceConfig.Builder dataSourceConfig = new DataSourceConfig.Builder(url, username, password);
+        return dataSourceConfig;
     }
 
-    public DefaultGeneratorStrategy(DataSourceConfig.Builder datasourceConfig) {
+    /**
+     * 获取默认的数据源配置 -> 在此处可以设置通用的全局配置
+     *
+     * @return
+     */
+    public static GlobalConfig.Builder getDefaultGlobalConfig() {
+        GlobalConfig.Builder globalConfig = new GlobalConfig.Builder();
+        return globalConfig;
     }
+
+
+    /**
+     * 获取默认的包配置 -> 在此处可以设置通用的包全局配置
+     *
+     * @return
+     */
+    public static PackageConfig.Builder getDefaultPackageConfig() {
+        PackageConfig.Builder packageConfig = new PackageConfig.Builder();
+        return packageConfig;
+    }
+
+    /**
+     * 获取默认的策略配置 -> 在此处可以设置通用的包全局配置
+     *
+     * @return
+     */
+    public static StrategyConfig.Builder getDefaultStrategyConfig() {
+        StrategyConfig.Builder strategyConfig = new StrategyConfig.Builder();
+        // 默认覆盖之前生成的文件
+        strategyConfig.entityBuilder().enableFileOverride();
+        strategyConfig.mapperBuilder().enableFileOverride();
+        strategyConfig.serviceBuilder().enableFileOverride();
+        strategyConfig.controllerBuilder().enableFileOverride();
+        return strategyConfig;
+    }
+
+
+    /**
+     * 获取默认模板设置
+     *
+     * @return
+     */
+    public static TemplateConfig.Builder getDefaultTemplateConfig() {
+        TemplateConfig.Builder templateConfig = new TemplateConfig.Builder();
+        return templateConfig;
+    }
+
 }

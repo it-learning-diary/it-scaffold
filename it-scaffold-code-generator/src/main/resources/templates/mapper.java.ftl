@@ -7,10 +7,7 @@ import ${mapperAnnotationClass.name};
 </#if>
 
 /**
- * <p>
- * ${table.comment!} Mapper 接口
- * </p>
- *
+ * @description: ${table.comment!} Mapper 接口
  * @author ${author}
  * @version: v1
  * @time ${date}
