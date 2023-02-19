@@ -29,11 +29,8 @@
         <mybatis.plus.version>3.5.3</mybatis.plus.version>
         <freemarker.version>2.3.31</freemarker.version>
         <lombok.version>1.18.22</lombok.version>
-<<<<<<< HEAD
-=======
         <validation.version>3.0.1</validation.version>
         <hutool.version>5.7.14</hutool.version>
->>>>>>> develop
     </properties>
 
     <!-- 管理第三方依赖版本 -->
@@ -75,8 +72,6 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-<<<<<<< HEAD
-=======
             <!-- 常见校验注解依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -90,7 +85,6 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
->>>>>>> develop
         </dependencies>
     </dependencyManagement>
 

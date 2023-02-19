@@ -18,10 +18,7 @@
     </properties>
 
     <dependencies>
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
         <!-- 公共模块引入 -->
         <dependency>
             <groupId>cn.itdiary.scaffold</groupId>
@@ -51,15 +48,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
-<<<<<<< HEAD
-=======
         <!-- springboot test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-
->>>>>>> develop
 
         <!-- mysql连接connection -->
         <dependency>
@@ -79,8 +72,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-<<<<<<< HEAD
-=======
 
         <!-- 常见校验注解依赖 -->
         <dependency>
@@ -93,7 +84,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
->>>>>>> develop
     </dependencies>
 
     <!-- 构建配置 -->
