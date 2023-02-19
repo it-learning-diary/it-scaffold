@@ -21,7 +21,6 @@ public class StrategyConfigDTO {
     /**
      * 需要生成的表名词
      */
-    @NotEmpty(message = "需要生成代码的表名不能为空")
     private List<String> includeTableNameList;
 
     /**

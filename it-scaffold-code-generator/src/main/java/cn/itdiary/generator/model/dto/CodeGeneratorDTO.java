@@ -42,8 +42,6 @@ public class CodeGeneratorDTO {
     /**
      * 表生成策略配置，如配置需要生成哪些表，排除哪些前缀的表等
      */
-    @NotNull(message = "表生成策略配置不能为空")
-    @Valid
     private StrategyConfigDTO strategyConfigDto;
 
 }

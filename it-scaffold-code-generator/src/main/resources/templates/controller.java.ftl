@@ -16,6 +16,9 @@ import ${superControllerClassPackage};
  * @version: v1
  * @time ${date}
  */
+<#if swagger>
+@ApiModel(value = "${entity}", description = "${table.comment!}接口层")
+</#if>
 <#if restControllerStyle>
 @RestController
 <#else>

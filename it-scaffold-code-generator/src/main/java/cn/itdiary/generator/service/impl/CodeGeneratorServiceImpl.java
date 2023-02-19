@@ -61,7 +61,9 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
             autoGenerator.packageInfo(defaultPackageConfig.build());
 
             // 生成策略
-            defaultStrategyConfig.addInclude(strategyConfigDto.getIncludeTableNameList());
+            if(!CollectionUtils.isEmpty(strategyConfigDto.getIncludeTableNameList())){
+                defaultStrategyConfig.addInclude(strategyConfigDto.getIncludeTableNameList());
+            }
             if (!CollectionUtils.isEmpty(strategyConfigDto.getExcludeTableNameList())) {
                 defaultStrategyConfig.addExclude(strategyConfigDto.getExcludeTableNameList());
             }
