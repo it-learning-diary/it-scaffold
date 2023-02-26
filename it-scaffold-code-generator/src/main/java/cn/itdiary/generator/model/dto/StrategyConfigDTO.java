@@ -28,4 +28,9 @@ public class StrategyConfigDTO {
      */
     private List<String> excludeTableNameList;
 
+    /**
+     * 是否启用lombok注解
+     */
+    private Boolean enableLombok;
+
 }

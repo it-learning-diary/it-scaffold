@@ -26,7 +26,6 @@ public class PackageConfigDTO {
     /**
      * 子模块包名，多个单词使用逗号隔开
      */
-    @NotBlank(message = "模块包名不能为空")
     private String modulePackageName;
 
 }

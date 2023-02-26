@@ -23,7 +23,7 @@ public class GlobalConfigDTO {
     private String author;
 
     /**
-     * 代码生成路径
+     * 代码生成路径，如D盘code目录下的it-test项目则为：D://code//it-test
      */
     @NotBlank(message = "代码生成存放路径不能为空")
     private String outputDir;
@@ -33,5 +33,10 @@ public class GlobalConfigDTO {
      */
     private Boolean enableSwagger;
 
+    /**
+     * 生成的代码项目是否是Maven项目，如果是，生成的代码会自动在上面的outputDir后面加上/src/main/java下
+     * 即实际生成的代码位置是：outputDir字段的值+/src/main/java
+     */
+    private Boolean mavenProject;
 
 }

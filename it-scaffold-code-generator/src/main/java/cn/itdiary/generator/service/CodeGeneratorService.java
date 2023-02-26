@@ -1,6 +1,7 @@
 package cn.itdiary.generator.service;
 
 import cn.itdiary.generator.model.dto.CodeGeneratorDTO;
+import cn.itdiary.generator.model.dto.generator.project.ProjectGeneratorDTO;
 import cn.itdiary.generator.model.vo.BaseVo;
 
 /**
@@ -17,5 +18,12 @@ public interface CodeGeneratorService {
      * @return
      */
     BaseVo<Void> generateCodeByParam(CodeGeneratorDTO param);
+
+    /**
+     * 自动生成项目
+     * @param param
+     * @return
+     */
+    BaseVo<Void> generateProjectByParam(ProjectGeneratorDTO param);
 
 }
