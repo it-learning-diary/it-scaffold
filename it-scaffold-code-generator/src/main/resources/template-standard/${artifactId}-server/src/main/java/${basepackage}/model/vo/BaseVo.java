@@ -53,14 +53,4 @@ public class BaseVo<T> {
         return new BaseVo(HttpStatus.OK.value(), message, data);
     }
 
-    /**
-     * 请求失败
-     * @param code
-     * @param message
-     * @return
-     */
-    public static BaseVo fail(int code, String message){
-        return new BaseVo(code, message);
-    }
-
 }

@@ -1,7 +1,6 @@
 package cn.itdiary.generator.controller;
 
 import cn.itdiary.generator.model.dto.CodeGeneratorDTO;
-import cn.itdiary.generator.model.dto.generator.project.ProjectGeneratorDTO;
 import cn.itdiary.generator.model.vo.BaseVo;
 import cn.itdiary.generator.service.CodeGeneratorService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import javax.validation.Valid;
  * @Date: 2023/2/14:11:51
  */
 @RestController
-@RequestMapping("/generator/")
+@RequestMapping("/code/")
 @RequiredArgsConstructor
 public class CodeGeneratorController {
 
@@ -31,20 +30,10 @@ public class CodeGeneratorController {
      * @param param
      * @return
      */
-    @PostMapping("code")
+    @PostMapping("generator")
     public BaseVo<Void> generateCodeByParam(@RequestBody @Valid CodeGeneratorDTO param) {
         BaseVo<Void> result = codeGeneratorService.generateCodeByParam(param);
         return result;
     }
 
-    /**
-     * 自动生成项目
-     * @param param
-     * @return
-     */
-    @PostMapping("project")
-    public BaseVo<Void> generateProjectByParam(@RequestBody @Valid ProjectGeneratorDTO param) {
-        BaseVo<Void> result = codeGeneratorService.generateProjectByParam(param);
-        return result;
-    }
 }
