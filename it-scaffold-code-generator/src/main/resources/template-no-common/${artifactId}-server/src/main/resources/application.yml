@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: ${artifactId}
+  profiles:
+    active: "@profiles.active@"
+  datasource:
+    url: jdbc:mysql://localhost:3306/user2?useAffectedRows=true&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+server:
+  port: 20000
+
+
+# log日志存放地址
+logback:
+  logDir: D:\\it-diary\\log\\codeGenerator
+  maxHistory: 10
+  appName: ${artifactId}
+  level: INFO
+
+# 指定logback日志配置
+logging:
+  config: classpath:logback-spring.xml

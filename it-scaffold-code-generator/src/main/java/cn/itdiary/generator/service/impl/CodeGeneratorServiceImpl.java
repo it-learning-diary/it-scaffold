@@ -12,9 +12,9 @@ import cn.itdiary.generator.service.CodeGeneratorService;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,6 @@ import org.springframework.util.CollectionUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,17 +128,17 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
             // 封装具体数据
             Map<String, Object> generatorProjectParam = buildProjectMap(param);
 
-            // 模板相关配置
-            freemarkerConfiguration.setDefaultEncoding("UTF-8");
-            //freemarkerConfiguration.setTemplateLoader(new FileTemplateLoader(new File("D://")));
-            freemarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(CodeGeneratorServiceImpl.class, "/**"));
-
-            // 加载模板地址
+            // 加载模板地址(对应文件的classpath路径)
             URL templateUrl = Thread.currentThread().getContextClassLoader().getResource(templateName);
             if (null == templateUrl) {
                 log.error("查询不到模板信息，模板名称::{]", templateName);
                 return BaseVo.fail(HttpStatus.NOT_FOUND.value(), "查询不到模板信息");
             }
+
+            // 模板相关配置
+            freemarkerConfiguration.setDefaultEncoding("UTF-8");
+            freemarkerConfiguration.setDirectoryForTemplateLoading(new File(templateUrl.getPath()));
+            freemarkerConfiguration.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
 
             // 处理文件保存地址(传入的可能是：\\或者/或者直接是文件名，此时导出的文件需要拼接文件名称)
             File outputFile;
@@ -148,7 +147,8 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
                 outputFileParentPath = param.getGeneratorPath() + param.getArtifactId();
             } else {
                 outputFileParentPath = param.getGeneratorPath() + StrUtil.SLASH + param.getArtifactId();
-            } outputFile = new File(outputFileParentPath);
+            }
+            outputFile = new File(outputFileParentPath);
 
             // 创建对应文件路径
             FileUtil.mkdir(outputFile);
@@ -158,14 +158,14 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
             File templateFile = new File(templateUrlPath);
             File[] listFiles = templateFile.listFiles();
 
-            // 遍历执行
+            // 递归执行
             for (File template : listFiles) {
                 generatorTemplateFile(outputFile, template, generatorProjectParam);
             }
-
         } catch (Exception e) {
             log.error("generateProjectByParam in error::{}", e);
-        } return null;
+        }
+        return null;
     }
 
     /**
@@ -177,7 +177,8 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
     private void generatorTemplateFile(File parentFile, File templateFile, Map<String, Object> data) throws Exception {
         // 文件
         if (templateFile.isFile()) {
-            String flashStr = SystemUtil.getOsInfo().isWindows() ? StrUtil.BACKSLASH : StrUtil.SLASH;
+            // 设置加载模板地址(需要指定，不然的话会出现template not found...)
+            freemarkerConfiguration.setDirectoryForTemplateLoading(new File(templateFile.getParent()));
             // 寻找到具体模板
             Template template = freemarkerConfiguration.getTemplate(templateFile.getName());
 
@@ -189,22 +190,30 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
                     System.out.println("创建文件失败！" + outFile.getAbsolutePath());
                 }
             }
-            // try(){}方式自动关闭流
+            // 1、说明，freemarker中如果占位符的值不存在或者为空，都会抛出异常，
+            // 2、因此日志配置文件中存在读取application.yml文件的占位符，需要跳过占位符替换
+            // 3、try(){}方式自动关闭流
             try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(outFile));) {
-                // 模板数据合并
-                template.process(data, writer);
+                if (!"logback-spring.xml".equals(templateFile.getName())) {
+                    // 模板数据合并
+                    template.process(data, writer);
+                } else {
+                    writer.write(template.toString());
+                }
             }
-            // 文件夹
+        // 文件夹
         } else {
             // 替换包名占位符
             String fileName = templateFile.getName().replace("${basepackage}", String.valueOf(data.get("basepackage")));
             // 替换项目名称占位符
-            fileName = templateFile.getName().replace("${artifactId}", String.valueOf(data.get("artifactId")));
+            fileName = fileName.replace("${artifactId}", String.valueOf(data.get("artifactId")));
             // .号替换成分割线，用于创建文件夹
             if (fileName.contains(StrUtil.DOT)) {
-                fileName = SystemUtil.getOsInfo().isWindows() ? fileName.replace(StrUtil.DOT, StrUtil.BACKSLASH) : fileName.replace(StrUtil.DOT, StrUtil.SLASH);
+                fileName = SystemUtil.getOsInfo().isWindows() ? fileName.replace(StrUtil.DOT, StrUtil.BACKSLASH)
+                        : fileName.replace(StrUtil.DOT, StrUtil.SLASH);
             }
-            String templateFileParentDirName = SystemUtil.getOsInfo().isWindows() ? (parentFile.getAbsolutePath() + StrUtil.BACKSLASH + fileName) : (parentFile.getAbsolutePath() + StrUtil.SLASH + fileName);
+            String templateFileParentDirName = SystemUtil.getOsInfo().isWindows() ? (parentFile.getAbsolutePath() + StrUtil.BACKSLASH + fileName)
+                    : (parentFile.getAbsolutePath() + StrUtil.SLASH + fileName);
 
             if (!FileUtil.isDirectory(templateFileParentDirName)) {
                 FileUtil.mkdir(templateFileParentDirName);
@@ -213,10 +222,10 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
             if (files == null || files.length == 0) {
                 return;
             }
-            for (File tempFile : files) {
-                generatorTemplateFile(new File(templateFileParentDirName), tempFile, data);
+            // 递归调用
+            for (File item : files) {
+                generatorTemplateFile(new File(templateFileParentDirName), item, data);
             }
-
         }
     }
 
@@ -234,4 +243,5 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
         data.put(GeneratorConstant.BASE_PACKAGE, param.getBasePackage());
         return data;
     }
+
 }

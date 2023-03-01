@@ -19,13 +19,6 @@
 
     <dependencies>
 
-        <!-- 公共模块引入 -->
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${artifactId}-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

@@ -1,4 +1,0 @@
-${author},
-${artifactId},
-${groupId},
-${basepackage}
