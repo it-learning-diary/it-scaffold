@@ -35,7 +35,7 @@ public class ProjectGeneratorDTO {
     private String artifactId;
 
     /**
-     * 包控件，如cn.test
+     * 包空间，如cn.test
      */
     @NotBlank(message = "包空间值不能为空")
     private String basePackage;

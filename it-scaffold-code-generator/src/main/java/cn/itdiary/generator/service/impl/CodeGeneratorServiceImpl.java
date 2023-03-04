@@ -9,9 +9,11 @@ import cn.itdiary.generator.model.dto.*;
 import cn.itdiary.generator.model.dto.generator.project.ProjectGeneratorDTO;
 import cn.itdiary.generator.model.vo.BaseVo;
 import cn.itdiary.generator.service.CodeGeneratorService;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.util.RuntimeUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -22,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.HashMap;
@@ -162,10 +165,13 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
             for (File template : listFiles) {
                 generatorTemplateFile(outputFile, template, generatorProjectParam);
             }
+            // 弹出生成目录
+            openDir(outputFileParentPath);
         } catch (Exception e) {
             log.error("generateProjectByParam in error::{}", e);
+            BaseVo.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         }
-        return null;
+        return BaseVo.success();
     }
 
     /**
@@ -201,7 +207,7 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
                     writer.write(template.toString());
                 }
             }
-        // 文件夹
+            // 文件夹
         } else {
             // 替换包名占位符
             String fileName = templateFile.getName().replace("${basepackage}", String.valueOf(data.get("basepackage")));
@@ -244,4 +250,18 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
         return data;
     }
 
+    /**
+     * 打开输出目录
+     */
+    public void openDir(String openDir) {
+        if (StringUtils.isBlank(openDir) || !new File(openDir).exists()) {
+            log.error("未找到输出目录：", openDir);
+        } else {
+            try {
+                RuntimeUtils.openDir(openDir);
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+    }
 }
