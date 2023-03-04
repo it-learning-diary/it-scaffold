@@ -3,20 +3,19 @@
 #### Description
 通用代码生成脚手架
 
+1、自动生成基础项目结构(可以自定义模板)
+2、自动生成表相关实体如controller，service层(可以自定义模板)
+
 #### Software Architecture
 Software architecture description
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+
 
 #### Instructions
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+
 
 #### Contribution
 
